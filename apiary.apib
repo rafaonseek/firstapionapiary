@@ -1,0 +1,111 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# First API on Apiary
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Questions Collection [/questions{?ordered}]
+Questions Collections Description
+
++ description +
+    - description -
+    * description *
+
+### List All Questions [GET]
+List all questions Description
+
++ Parameters
+    + ordered: true (optional, number) - Ordered by time
+     
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
+
+
+## Test Collections  [/test]
+
+### Test Operation [GET]
+
++ Response 200 (application/json)
+
+        {
+            "id": 12,
+            "answer": "Thanks by the request"
+        }
+
+# Data Structures
+
+## TestObj (object)
+Definition of a video
+
++ id: 123 (number, required) - The unique key
++ description: "my video" (string, required) - Free text of video
++ truc: "ffff" (string, required)

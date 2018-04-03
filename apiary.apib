@@ -1,111 +1,116 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-# First API on Apiary
+# Calculus
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## Questions Collection [/questions{?ordered}]
-Questions Collections Description
+## Calculator Collection [/calculator]
 
-+ description +
-    - description -
-    * description *
+### Add an Operation [POST]
 
-### List All Questions [GET]
-List all questions Description
-
-+ Parameters
-    + ordered: true (optional, number) - Ordered by time
-     
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
++ Request Create New Operation (application/json)
 
 + Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
+    + Attributes (Operation)
+    
++ Response 405
+    Invalid Input
     + Body
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+## Calculator Collection [/calculator/{operationId}]
 
++ Parameters
+    + operationId (number, required) - Operation Identification
 
-## Test Collections  [/test]
+### Update Operation [PUT]
+    
++ Request (application/json)
+    + Attributes (Operation)
 
-### Test Operation [GET]
++ Response 202 (application/json)
+    + Attributes (Operation)
+    Successful Update Operation
+    
++ Response 400 (plain)
+    Invalid ID Supplied
+    + Body
+    
++ Response 404
+    Operation not Found
+    + Body
+    
++ Response 405
+    Validation Exception
+    + Body 
+
+### Delete Operation [DELETE]
+
++ Response 202 (application/json)
+    + Attributes (Operation)
+    Successful Delete Operation
+    
++ Response 400 
+    Invalid ID Supplied
+    + Body
+    
++ Response 404
+    Operation not Found
+    + Body
+    
++ Response 405
+    Validation Exception
+    + Body
+   
+### Obtain Operation [GET]
+
 
 + Response 200 (application/json)
+    + Attributes (Operation)
+    Successful Operation
+    
++ Response 400 
+    Invalid Tag Value
+    + Body
 
-        {
-            "id": 12,
-            "answer": "Thanks by the request"
-        }
+## Override Collection [/calculator/{operationId}/deleteOperation]
 
-# Data Structures
++ Parameters
+    + operationId (number, required) - Operation Identification
 
-## TestObj (object)
-Definition of a video
+### Override Delete Operation on GET HTTP Verb [GET]
+            
++ Response 200 (application/json)
+    + Attributes (Operation)
+    Successful Operation
 
-+ id: 123 (number, required) - The unique key
-+ description: "my video" (string, required) - Free text of video
-+ truc: "ffff" (string, required)
++ Response 400
+    Invalid Tag Value
+    + Body
+
+## Calculation Collection [/calculator/calculate/{?operand1,operand2,operator}]
+
+### Calculate [GET]
+           
++ Parameters
+    + operand1: 10 (number, required) - First Operand 
+    + operand2: 20 (number, required) - Second Operand
+    + operator: Addition (string, required) - Operator Multiplication, Division, Subtraction or Addition
+    
+            
++ Response 200 (application/json)
+    + Attributes (Operation)
+    Successful Operation
+
++ Response 400
+    Invalid Tag Value
+    + Body
+
+## Data Structures
+
+### Operation (object)
++ operationId: 10 (number, required) - Operation Identification on Db
++ operand1: 10 (number, required) - First Operand 
++ operand2: 20 (number, required) - Second Operand
++ operator: Addition (string, required) - Operator Multiplication, Division, Subtraction or Addition
++ result: 30 (number, required) - Result

@@ -67,10 +67,12 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
 
 + Response 200 (application/json)
+    
     + Headers
-        X-RateLimit-Limit: 100, Request limit per hour.
-        X-RateLimit-Remaining: 91, The number of requests left for the time window.
-        X-RateLimit-Reset: 10:12PM, The UTC date/time at which the current rate limit window resets.
+        
+            X-RateLimit-Limit: 100, Request limit per hour.
+            X-RateLimit-Remaining: 91, The number of requests left for the time window.
+            X-RateLimit-Reset: 10:12PM, The UTC date/time at which the current rate limit window resets.
 
     + Attributes (Operation)
     Successful Operation
